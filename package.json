@@ -10,9 +10,6 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.10",
-    "@mantine/core": "^8.3.1",
-    "@mantine/form": "^8.3.1",
-    "@mantine/hooks": "^8.3.1",
     "autoprefixer": "^10.4.21",
     "clsx": "^2.1.1",
     "lucide-react": "^0.544.0",
