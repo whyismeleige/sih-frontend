@@ -1,89 +1,93 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded';
-import ConstructionRoundedIcon from '@mui/icons-material/ConstructionRounded';
-import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded';
-import SettingsSuggestRoundedIcon from '@mui/icons-material/SettingsSuggestRounded';
-import SupportAgentRoundedIcon from '@mui/icons-material/SupportAgentRounded';
-import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import AutoFixHighRoundedIcon from "@mui/icons-material/AutoFixHighRounded";
+import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
+import QueryStatsRoundedIcon from "@mui/icons-material/QueryStatsRounded";
+import SettingsSuggestRoundedIcon from "@mui/icons-material/SettingsSuggestRounded";
+import SupportAgentRoundedIcon from "@mui/icons-material/SupportAgentRounded";
+import ThumbUpAltRoundedIcon from "@mui/icons-material/ThumbUpAltRounded";
 
 const items = [
   {
     icon: <SettingsSuggestRoundedIcon />,
-    title: 'Adaptable performance',
+    title: "Swift response system",
     description:
-      'Our product effortlessly adjusts to your needs, boosting efficiency and simplifying your tasks.',
+      "Handle travel-related incidents with speed and accuracy, minimizing disruption and ensuring safety.",
   },
   {
     icon: <ConstructionRoundedIcon />,
-    title: 'Built to last',
+    title: "Robust reliability",
     description:
-      'Experience unmatched durability that goes above and beyond with lasting investment.',
+      "Rely on a system designed to perform under pressure, offering dependable protection during unexpected events.",
   },
   {
     icon: <ThumbUpAltRoundedIcon />,
-    title: 'Great user experience',
+    title: "Traveler-focused design",
     description:
-      'Integrate our product into your routine with an intuitive and easy-to-use interface.',
+      "Enjoy a streamlined experience built with travelers in mind, simplifying reporting and assistance at every step.",
   },
   {
     icon: <AutoFixHighRoundedIcon />,
-    title: 'Innovative functionality',
+    title: "Innovative safety features",
     description:
-      'Stay ahead with features that set new standards, addressing your evolving needs better than the rest.',
+      "Benefit from advanced monitoring, real-time alerts, and predictive tools that set new standards in travel security.",
   },
   {
     icon: <SupportAgentRoundedIcon />,
-    title: 'Reliable support',
+    title: "Dedicated support network",
     description:
-      'Count on our responsive customer support, offering assistance that goes beyond the purchase.',
+      "Access 24/7 assistance and guidance, ensuring help is always within reach, no matter where you are.",
   },
   {
     icon: <QueryStatsRoundedIcon />,
-    title: 'Precision in every detail',
+    title: "Precision-driven coordination",
     description:
-      'Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.',
+      "Experience a system where every detail from alerts to resolution, is fine-tuned for maximum impact and efficiency.",
   },
 ];
 
-export default function Highlights() {
+export default function Highlights(props: {
+  setRef: (key: string, node: HTMLDivElement | null) => void;
+}) {
   return (
     <Box
       id="highlights"
       sx={{
         pt: { xs: 4, sm: 12 },
         pb: { xs: 8, sm: 16 },
-        color: 'white',
-        bgcolor: 'grey.900',
+        color: "white",
+        bgcolor: "grey.900",
       }}
+      ref={(node: HTMLDivElement | null) => props.setRef("Highlights", node)}
     >
       <Container
         sx={{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           gap: { xs: 3, sm: 6 },
         }}
       >
         <Box
           sx={{
-            width: { sm: '100%', md: '60%' },
-            textAlign: { sm: 'left', md: 'center' },
+            width: { sm: "100%", md: "60%" },
+            textAlign: { sm: "left", md: "center" },
           }}
         >
           <Typography component="h2" variant="h4" gutterBottom>
             Highlights
           </Typography>
-          <Typography variant="body1" sx={{ color: 'grey.400' }}>
-            Explore why our product stands out: adaptability, durability,
-            user-friendly design, and innovation. Enjoy reliable customer support and
-            precision in every detail.
+          <Typography variant="body1" sx={{ color: "grey.400" }}>
+            Discover how Sentinel Travel ensures safety, reliability, and
+            seamless support for every traveler. Built on trust, speed, and
+            precision, it delivers peace of mind wherever your journey takes
+            you.
           </Typography>
         </Box>
         <Grid container spacing={2}>
@@ -95,19 +99,19 @@ export default function Highlights() {
                 spacing={1}
                 useFlexGap
                 sx={{
-                  color: 'inherit',
+                  color: "inherit",
                   p: 3,
-                  height: '100%',
-                  borderColor: 'hsla(220, 25%, 25%, 0.3)',
-                  backgroundColor: 'grey.800',
+                  height: "100%",
+                  borderColor: "hsla(220, 25%, 25%, 0.3)",
+                  backgroundColor: "grey.800",
                 }}
               >
-                <Box sx={{ opacity: '50%' }}>{item.icon}</Box>
+                <Box sx={{ opacity: "50%" }}>{item.icon}</Box>
                 <div>
-                  <Typography gutterBottom sx={{ fontWeight: 'medium' }}>
+                  <Typography gutterBottom sx={{ fontWeight: "medium" }}>
                     {item.title}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'grey.400' }}>
+                  <Typography variant="body2" sx={{ color: "grey.400" }}>
                     {item.description}
                   </Typography>
                 </div>

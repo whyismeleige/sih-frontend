@@ -1,4 +1,4 @@
-import SignInUI from "@/components/auth"
+import SignInUI from "@/components/auth/tourist"
 
 export default function Page(){
     return (<SignInUI/>)

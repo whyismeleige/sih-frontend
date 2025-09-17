@@ -1,36 +1,66 @@
-"use client"
+"use client";
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import AppAppBar from "./AppBar";
 import Hero from "./Hero";
-import LogoCollection from "./LogoCollection";
 import Highlights from "./Highlights";
-import Pricing from "./Pricing";
 import Features from "./Features";
-import Testimonials from "./Testimonials";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
-import AppTheme from '../theme/AppTheme';
+import AppTheme from "../theme/AppTheme";
+
+function smoothScrollTo(target: HTMLElement, duration: number = 1000) {
+  const start = window.scrollY;
+  const targetTop = target.getBoundingClientRect().top + window.scrollY;
+  const distance = targetTop - start;
+  let startTime: number | null = null;
+
+  function animation(currentTime: number) {
+    if (!startTime) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+    const progress = Math.min(timeElapsed / duration, 1);
+
+    // Ease in-out function
+    const easeInOut =
+      progress < 0.5
+        ? 2 * progress * progress
+        : -1 + (4 - 2 * progress) * progress;
+
+    window.scrollTo(0, start + distance * easeInOut);
+
+    if (timeElapsed < duration) {
+      requestAnimationFrame(animation);
+    }
+  }
+
+  requestAnimationFrame(animation);
+}
 
 export default function LandingPage(props: { disableCustomTheme?: boolean }) {
+  const refs = React.useRef<Record<string, HTMLDivElement | null>>({});
+
+  const setRef = (key: string, node: HTMLDivElement | null) => {
+    if (node) refs.current[key] = node;
+  };
+
+  const scrollTo = (key: string) => {
+    const target = refs.current[key];
+
+    if (target) smoothScrollTo(target, 1000);
+  };
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
 
-      <AppAppBar />
+      <AppAppBar scrollTo={scrollTo} />
       <Hero />
       <div>
-        <LogoCollection />
-        <Features />
+        <Features setRef={setRef} />
         <Divider />
-        <Testimonials />
+        <Highlights setRef={setRef} />
         <Divider />
-        <Highlights />
-        <Divider />
-        <Pricing />
-        <Divider />
-        <FAQ />
+        <FAQ setRef={setRef} />
         <Divider />
         <Footer />
       </div>
