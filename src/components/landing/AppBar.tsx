@@ -41,7 +41,7 @@ export default function AppAppBar(props: { scrollTo: (key: string) => void }) {
   const mobileScroll = (key: string) => {
     toggleDrawer(false)();
     props.scrollTo(key);
-  }
+  };
 
   return (
     <AppBar
@@ -60,6 +60,12 @@ export default function AppAppBar(props: { scrollTo: (key: string) => void }) {
             sx={{ flexGrow: 1, display: "flex", alignItems: "center", px: 0 }}
           >
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Button variant="text" color="info" size="small">
+                <Link href="/tourist">Tourist Dashboard</Link>
+              </Button>
+              <Button variant="text" color="info" size="small">
+                <Link href="/authority">Authority Dashboard</Link>
+              </Button>
               <Button
                 variant="text"
                 color="info"
@@ -84,15 +90,6 @@ export default function AppAppBar(props: { scrollTo: (key: string) => void }) {
                 onClick={() => props.scrollTo("FAQ")}
               >
                 FAQ
-              </Button>
-              <Button
-                variant="text"
-                color="info"
-                size="small"
-                sx={{ minWidth: 0 }}
-                onClick={() => props.scrollTo("Blog")}
-              >
-                Blog
               </Button>
             </Box>
           </Box>
@@ -128,7 +125,12 @@ export default function AppAppBar(props: { scrollTo: (key: string) => void }) {
                     <CloseRoundedIcon />
                   </IconButton>
                 </Box>
-
+                <MenuItem>
+                  <Link href="/tourist">Tourist Dashboard</Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link href="/authority">Authority Dashboard</Link>
+                </MenuItem>
                 <MenuItem onClick={() => mobileScroll("Features")}>
                   Features
                 </MenuItem>
