@@ -14,33 +14,33 @@ import StatCard, { StatCardProps } from './StatCard';
 
 const data: StatCardProps[] = [
   {
-    title: 'Users',
-    value: '14k',
+    title: 'Active Digital Tourist IDs',
+    value: '8.2k',
     interval: 'Last 30 days',
     trend: 'up',
     data: [
-      200, 24, 220, 260, 240, 380, 100, 240, 280, 240, 300, 340, 320, 360, 340, 380,
-      360, 400, 380, 420, 400, 640, 340, 460, 440, 480, 460, 600, 880, 920,
+      150, 180, 220, 280, 340, 380, 420, 460, 520, 580, 640, 720, 780, 840, 920, 1080,
+      1200, 1350, 1480, 1620, 1780, 1940, 2100, 2280, 2460, 2640, 2820, 3000, 3180, 3350,
     ],
   },
   {
-    title: 'Conversions',
-    value: '325',
+    title: 'Safety Alerts Resolved',
+    value: '247',
+    interval: 'Last 30 days',
+    trend: 'up',
+    data: [
+      45, 52, 38, 64, 71, 58, 49, 67, 73, 81, 69, 76, 84, 91, 88, 95,
+      102, 89, 97, 104, 111, 98, 105, 112, 119, 106, 113, 120, 127, 134,
+    ],
+  },
+  {
+    title: 'Geo-fence Violations',
+    value: '89',
     interval: 'Last 30 days',
     trend: 'down',
     data: [
-      1640, 1250, 970, 1130, 1050, 900, 720, 1080, 900, 450, 920, 820, 840, 600, 820,
-      780, 800, 760, 380, 740, 660, 620, 840, 500, 520, 480, 400, 360, 300, 220,
-    ],
-  },
-  {
-    title: 'Event count',
-    value: '200k',
-    interval: 'Last 30 days',
-    trend: 'neutral',
-    data: [
-      500, 400, 510, 530, 520, 600, 530, 520, 510, 730, 520, 510, 530, 620, 510, 530,
-      520, 410, 530, 520, 610, 530, 520, 610, 530, 420, 510, 430, 520, 510,
+      180, 165, 142, 158, 134, 121, 108, 95, 112, 98, 85, 102, 88, 75, 91, 78,
+      94, 81, 87, 74, 90, 77, 83, 70, 86, 73, 79, 66, 82, 69,
     ],
   },
 ];
@@ -50,7 +50,7 @@ export default function MainGrid() {
     <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } }}>
       {/* cards */}
       <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-        Overview
+        Tourist Safety Overview
       </Typography>
       <Grid
         container
@@ -73,17 +73,11 @@ export default function MainGrid() {
           <PageViewsBarChart />
         </Grid>
       </Grid>
-      <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
-        Details
-      </Typography>
       <Grid container spacing={2} columns={12}>
         <Grid size={{ xs: 12, lg: 9 }}>
-          <CustomizedDataGrid />
         </Grid>
         <Grid size={{ xs: 12, lg: 3 }}>
           <Stack gap={2} direction={{ xs: 'column', sm: 'row', lg: 'column' }}>
-            <CustomizedTreeView />
-            <ChartUserByCountry />
           </Stack>
         </Grid>
       </Grid>

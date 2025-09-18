@@ -7,18 +7,42 @@ import Stack from '@mui/material/Stack';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { useTheme } from '@mui/material/styles';
 
-export default function PageViewsBarChart() {
+export default function TouristSafetyBarChart() {
   const theme = useTheme();
   const colorPalette = [
     (theme.vars || theme).palette.primary.dark,
     (theme.vars || theme).palette.primary.main,
     (theme.vars || theme).palette.primary.light,
   ];
+
+  // Dummy data for Smart Tourist Safety Monitoring System
+  const touristSafetyData = {
+    totalRegistrations: '2.4M',
+    safetyImprovement: '+12%',
+    description: 'Digital tourist registrations and safety incidents for Northeast India - Last 7 months'
+  };
+
+  const monthlyData = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'
+  ];
+
+  const registrationsData = [
+    180000, 220000, 340000, 380000, 450000, 520000, 480000
+  ];
+
+  const incidentsReportedData = [
+    45, 38, 52, 41, 67, 73, 58
+  ];
+
+  const incidentsResolvedData = [
+    42, 36, 49, 39, 63, 69, 55
+  ];
+
   return (
     <Card variant="outlined" sx={{ width: '100%' }}>
       <CardContent>
         <Typography component="h2" variant="subtitle2" gutterBottom>
-          Page views and downloads
+          Tourist Safety Monitoring & Digital Registrations
         </Typography>
         <Stack sx={{ justifyContent: 'space-between' }}>
           <Stack
@@ -30,12 +54,12 @@ export default function PageViewsBarChart() {
             }}
           >
             <Typography variant="h4" component="p">
-              1.3M
+              {touristSafetyData.totalRegistrations}
             </Typography>
-            <Chip size="small" color="error" label="-8%" />
+            <Chip size="small" color="success" label={touristSafetyData.safetyImprovement} />
           </Stack>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            Page views and downloads for the last 6 months
+            {touristSafetyData.description}
           </Typography>
         </Stack>
         <BarChart
@@ -45,29 +69,29 @@ export default function PageViewsBarChart() {
             {
               scaleType: 'band',
               categoryGapRatio: 0.5,
-              data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+              data: monthlyData,
               height: 24,
             },
           ]}
           yAxis={[{ width: 50 }]}
           series={[
             {
-              id: 'page-views',
-              label: 'Page views',
-              data: [2234, 3872, 2998, 4125, 3357, 2789, 2998],
+              id: 'digital-registrations',
+              label: 'Digital Tourist Registrations',
+              data: registrationsData,
               stack: 'A',
             },
             {
-              id: 'downloads',
-              label: 'Downloads',
-              data: [3098, 4215, 2384, 2101, 4752, 3593, 2384],
-              stack: 'A',
+              id: 'incidents-reported',
+              label: 'Safety Incidents Reported',
+              data: incidentsReportedData,
+              stack: 'B',
             },
             {
-              id: 'conversions',
-              label: 'Conversions',
-              data: [4051, 2275, 3129, 4693, 3904, 2038, 2275],
-              stack: 'A',
+              id: 'incidents-resolved',
+              label: 'Incidents Resolved',
+              data: incidentsResolvedData,
+              stack: 'B',
             },
           ]}
           height={250}

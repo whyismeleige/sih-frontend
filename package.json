@@ -15,6 +15,7 @@
     "@googlemaps/js-api-loader": "^1.16.10",
     "@mui/icons-material": "^7.3.2",
     "@mui/material": "^7.3.2",
+    "@mui/material-nextjs": "^7.3.2",
     "@mui/x-charts": "^8.11.3",
     "@mui/x-data-grid": "^8.11.3",
     "@mui/x-data-grid-pro": "^8.11.3",
@@ -33,7 +34,8 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-is": "^18.3.1",
-    "react-spring": "^10.0.1"
+    "react-spring": "^10.0.1",
+    "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

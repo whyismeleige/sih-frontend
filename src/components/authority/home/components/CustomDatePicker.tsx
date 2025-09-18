@@ -18,10 +18,10 @@ import {
 interface ButtonFieldProps extends DatePickerFieldProps {}
 
 function ButtonField(props: ButtonFieldProps) {
-  const { forwardedProps } = useSplitFieldProps(props, "date");
   const pickerContext = usePickerContext();
   const handleRef = useForkRef(pickerContext.triggerRef, pickerContext.rootRef);
   const parsedFormat = useParsedFormat();
+  
   const valueStr =
     pickerContext.value == null
       ? parsedFormat
@@ -29,13 +29,15 @@ function ButtonField(props: ButtonFieldProps) {
 
   return (
     <Button
-      {...forwardedProps}
       variant="outlined"
       ref={handleRef}
       size="small"
       startIcon={<CalendarTodayRoundedIcon fontSize="small" />}
       sx={{ minWidth: "fit-content" }}
       onClick={() => pickerContext.setOpen((prev) => !prev)}
+      // Don't spread all props, only specific ones needed
+      disabled={props.disabled}
+      name={props.name}
     >
       {pickerContext.label ?? valueStr}
     </Button>

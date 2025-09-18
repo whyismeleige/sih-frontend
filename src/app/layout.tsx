@@ -1,4 +1,6 @@
 import "./globals.css";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+
 export const metadata = {
   title: "Farma Mitra",
   description: "Farmers Best Friend",
@@ -10,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html lang="en">
       <head>
         <link
           rel="stylesheet"
@@ -18,7 +20,11 @@ export default function RootLayout({
         />
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </head>
-      <body>{children}</body>
+      <body>
+        <AppRouterCacheProvider>
+          {children}
+        </AppRouterCacheProvider>
+      </body>
     </html>
   );
 }
