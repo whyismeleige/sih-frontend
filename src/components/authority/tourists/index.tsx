@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import Radar from "radar-sdk-js";
 
 import "radar-sdk-js/dist/radar.css";
@@ -8,7 +8,7 @@ if (!process.env.NEXT_PUBLIC_RADAR_KEY)
   throw new Error("RADAR_KEY not defined");
 
 const RADAR_KEY = process.env.NEXT_PUBLIC_RADAR_KEY;
-const CUSTOM_RADAR_MAP = process.env.NEXT_PUBLIC_CUSTOM_RADAR_MAP
+const CUSTOM_RADAR_MAP = process.env.NEXT_PUBLIC_CUSTOM_RADAR_MAP;
 
 // Types
 interface MarkerData {
@@ -30,7 +30,7 @@ interface GeofenceData {
 
 interface MarkerInstance {
   id: number;
-  marker: any; // Radar marker instance
+  marker: unknown; // Radar marker instance
 }
 
 interface GeofenceInstance {
@@ -46,11 +46,18 @@ interface RadarAddress {
   };
 }
 
+interface MapClickEvent {
+  lngLat: {
+    lng: number;
+    lat: number;
+  };
+}
+
 const RadarMap: React.FC = () => {
-  const mapRef = useRef<any>(null);
-  const autocompleteRef = useRef<any>(null);
+  const mapRef = useRef<unknown>(null);
+  const autocompleteRef = useRef<unknown>(null);
   const markersRef = useRef<MarkerInstance[]>([]);
-  const userLocationMarkerRef = useRef<any>(null);
+  const userLocationMarkerRef = useRef<unknown>(null);
   const geofencesRef = useRef<GeofenceInstance[]>([]);
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
   
@@ -104,11 +111,13 @@ const RadarMap: React.FC = () => {
           setUserLocation(coords);
           
           if (mapRef.current) {
-            mapRef.current.flyTo({ center: coords, zoom: 14 });
+            const map = mapRef.current as any;
+            map.flyTo({ center: coords, zoom: 14 });
             
             // Remove existing user location marker
             if (userLocationMarkerRef.current) {
-              userLocationMarkerRef.current.remove();
+              const userMarker = userLocationMarkerRef.current as any;
+              userMarker.remove();
             }
             
             // Add new user location marker
@@ -119,7 +128,7 @@ const RadarMap: React.FC = () => {
                 color: "#007cbf"
               })
               .setLngLat(coords)
-              .addTo(mapRef.current);
+              .addTo(map);
             
             userLocationMarkerRef.current = userMarker;
           }
@@ -159,7 +168,8 @@ const RadarMap: React.FC = () => {
     // Remove from map
     const markerInstance = markersRef.current.find(m => m.id === markerId);
     if (markerInstance) {
-      markerInstance.marker.remove();
+      const marker = markerInstance.marker as any;
+      marker.remove();
       markersRef.current = markersRef.current.filter(m => m.id !== markerId);
     }
   };
@@ -189,12 +199,13 @@ const RadarMap: React.FC = () => {
     // Remove from map
     const geofenceInstance = geofencesRef.current.find(g => g.id === geofenceId);
     if (geofenceInstance && mapRef.current && mapLoaded) {
+      const map = mapRef.current as any;
       try {
-        if (mapRef.current.getLayer(geofenceInstance.layerId)) {
-          mapRef.current.removeLayer(geofenceInstance.layerId);
+        if (map.getLayer(geofenceInstance.layerId)) {
+          map.removeLayer(geofenceInstance.layerId);
         }
-        if (mapRef.current.getSource(geofenceInstance.sourceId)) {
-          mapRef.current.removeSource(geofenceInstance.sourceId);
+        if (map.getSource(geofenceInstance.sourceId)) {
+          map.removeSource(geofenceInstance.sourceId);
         }
         geofencesRef.current = geofencesRef.current.filter(g => g.id !== geofenceId);
       } catch (error) {
@@ -204,10 +215,10 @@ const RadarMap: React.FC = () => {
   };
 
   // Create geofence on map click
-  const handleMapClick = (e: any): void => {
+  const handleMapClick = useCallback((e: MapClickEvent): void => {
     const coords: [number, number] = [e.lngLat.lng, e.lngLat.lat];
     addGeofence(coords, 100, "Click Geofence", "click");
-  };
+  }, []);
 
   useEffect(() => {
     // Initialize Radar
@@ -258,10 +269,14 @@ const RadarMap: React.FC = () => {
 
     // Cleanup function
     return () => {
-      autocompleteRef.current?.remove();
+      const autocompleteInstance = autocompleteRef.current as any;
+      autocompleteInstance?.remove();
+      
       markersRef.current.forEach(markerInstance => {
-        markerInstance.marker.remove();
+        const marker = markerInstance.marker as any;
+        marker.remove();
       });
+      
       geofencesRef.current.forEach(geofenceInstance => {
         try {
           if (map.getLayer(geofenceInstance.layerId)) {
@@ -275,15 +290,18 @@ const RadarMap: React.FC = () => {
         }
       });
     };
-  }, []);
+  }, [handleMapClick]);
 
   // Update markers on map when markers state changes
   useEffect(() => {
     if (!mapRef.current) return;
 
+    const map = mapRef.current as any;
+
     // Clear existing markers
     markersRef.current.forEach(markerInstance => {
-      markerInstance.marker.remove();
+      const marker = markerInstance.marker as any;
+      marker.remove();
     });
     markersRef.current = [];
 
@@ -295,7 +313,7 @@ const RadarMap: React.FC = () => {
           popup: markerData.popup
         })
         .setLngLat(markerData.coordinates)
-        .addTo(mapRef.current);
+        .addTo(map);
 
       markersRef.current.push({
         id: markerData.id,
@@ -308,14 +326,16 @@ const RadarMap: React.FC = () => {
   useEffect(() => {
     if (!mapRef.current || !mapLoaded) return;
 
+    const map = mapRef.current as any;
+
     // Clear existing geofences
     geofencesRef.current.forEach(geofenceInstance => {
       try {
-        if (mapRef.current.getLayer(geofenceInstance.layerId)) {
-          mapRef.current.removeLayer(geofenceInstance.layerId);
+        if (map.getLayer(geofenceInstance.layerId)) {
+          map.removeLayer(geofenceInstance.layerId);
         }
-        if (mapRef.current.getSource(geofenceInstance.sourceId)) {
-          mapRef.current.removeSource(geofenceInstance.sourceId);
+        if (map.getSource(geofenceInstance.sourceId)) {
+          map.removeSource(geofenceInstance.sourceId);
         }
       } catch (error) {
         console.warn('Error removing geofence:', error);
@@ -344,7 +364,7 @@ const RadarMap: React.FC = () => {
         coords.push(coords[0]); // Close the polygon
 
         // Add source
-        mapRef.current.addSource(sourceId, {
+        map.addSource(sourceId, {
           type: 'geojson',
           data: {
             type: 'Feature',
@@ -360,7 +380,7 @@ const RadarMap: React.FC = () => {
         });
 
         // Add layer
-        mapRef.current.addLayer({
+        map.addLayer({
           id: layerId,
           type: 'fill',
           source: sourceId,
