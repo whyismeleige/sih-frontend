@@ -2,8 +2,8 @@ import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 
 export const metadata = {
-  title: "Farma Mitra",
-  description: "Farmers Best Friend",
+  title: "Sentinel Travel",
+  description: "Your Travel Buddy",
 };
 
 export default function RootLayout({
